@@ -103,15 +103,19 @@ def generate_2d_layout(title,x_axis_name,y_axis_name,x,y):
     return layout
 
 
-def make_2d_surface_contours(x, y, z, title='', x_axis_name='', y_axis_name='', z_axis_name=''):
+def make_2d_surface_contours(x, y, z, title='', x_axis_name='', y_axis_name='', z_axis_name='', extra_contour_line=None):
         fig = plt.figure()
         ax = plt.axes()
         X, Y, Z = grid(x, y, z, resX=187, resY=187) 
 
+        if extra_contour_line != None:
+            contours2 = plt.contour(X, Y, Z, levels= [extra_contour_line] ,colors='blue', linestyles=':')
+            # plt.plot([0], [0], ls=':',c='blue', label=entry['label'])
         ax.scatter(x,y,c='red',s=2,zorder=5)
         contours = plt.contour(X, Y, Z, colors='black', vmin=0.5, vmax=max(z))
         plt.contourf(X, Y, Z, 100)
         
+
 
         ax.set_xlim([min(x),max(x)])
         ax.set_ylim([min(y),max(y)])                                
@@ -179,4 +183,5 @@ if len(x) < 40:
         'layout':layout},
         filename='example_irregular_plot.html')    
 
+make_2d_surface_contours(x,y,z,'my plot',args.x_axis,'arm','leak',0.96)
 make_2d_surface_contours(x,y,z,'my plot',args.x_axis,'arm','leak')
